@@ -1,0 +1,158 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  /* Core background + text */
+  --bg-main:        #0b0b0f;  /* deep near-black */
+  --bg-elevated:    #111118;  /* cards / sections */
+  --bg-soft:        #15151f;  /* subtle surfaces */
+
+  --text-primary:   #f3eee4;  /* soft off-white */
+  --text-muted:     #9ca3b0;
+
+  /* Accent + glow */
+  --accent:         #ff4d45;  /* warm red/orange */
+  --accent-soft:    #ff8a3c;
+
+  --border-subtle:  rgba(148, 163, 184, 0.35);
+  --border-strong:  rgba(248, 250, 252, 0.14);
+
+  --glow-soft:      0 0 40px rgba(255, 77, 69, 0.35);
+
+  /* Motion — film-grade easing */
+  --ease-film: cubic-bezier(0.77, 0, 0.18, 1);
+  --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
+
+  /* Legacy aliases used in existing components */
+  --cream:       var(--bg-main);
+  --cream-dark:  var(--bg-elevated);
+  --ink:         var(--text-primary);
+  --ink-light:   #ffffff;
+  --grey-mid:    #4b5563;
+  --grey-light:  #1f2933;
+  --yellow:      var(--accent);
+  --yellow-dark: #b91c1c;
+  --dark-bg:     #020308;
+}
+
+/* Lenis smooth scroll */
+html.lenis, html.lenis body { height: auto; }
+.lenis.lenis-smooth { scroll-behavior: auto !important; }
+.lenis.lenis-smooth [data-lenis-prevent] { overscroll-behavior: contain; }
+.lenis.lenis-stopped { overflow: hidden; }
+
+html {
+  scroll-behavior: smooth;
+}
+
+/* Typography base */
+body {
+  background-color: var(--bg-main);
+  color: var(--text-primary);
+  font-family: var(--font-instrument), serif;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* Global smooth hover for interactive elements */
+a,
+button {
+  transition:
+    color 200ms ease,
+    background-color 200ms ease,
+    border-color 200ms ease,
+    transform 200ms ease,
+    box-shadow 200ms ease;
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar       { width: 3px; }
+::-webkit-scrollbar-track { background: var(--cream); }
+::-webkit-scrollbar-thumb { background: var(--yellow); border-radius: 2px; }
+
+/* Cursor — apply only to elements with custom cursor class when script is active */
+.custom-cursor { cursor: none; }
+
+/* Clip-path wipe animation — used for image reveals */
+@keyframes clipWipe {
+  from { clip-path: inset(0 100% 0 0); }
+  to   { clip-path: inset(0 0% 0 0);   }
+}
+
+/* Line draw animation */
+@keyframes lineDraw {
+  from { transform: scaleX(0); }
+  to   { transform: scaleX(1); }
+}
+
+/* Grain texture overlay */
+body::after {
+  content: "";
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 9999;
+  opacity: 0.03;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 512 512' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='grain'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23grain)'/%3E%3C/svg%3E");
+}
+
+/* Magic burn canvas reveal on page load */
+@keyframes magicBurnReveal {
+  from {
+    opacity: 0;
+    transform: scale(1.05);
+  }
+  to {
+    opacity: 0.7;
+    transform: scale(1);
+  }
+}
+
+.magic-burn-bg {
+  animation: magicBurnReveal 1.6s ease-out forwards;
+}
+
+/* Subtle vignette — cinematic frame */
+.vignette-overlay {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 9998;
+  background: radial-gradient(
+    ellipse 120% 100% at 50% 50%,
+    transparent 40%,
+    rgba(0, 0, 0, 0.25) 100%
+  );
+}
+
+/* Cinematic tag — lens flare sweep on hover */
+@keyframes cinematicShimmer {
+  from { transform: translateX(-100%); }
+  to { transform: translateX(100%); }
+}
+.cinematic-tag-wrap:hover .cinematic-tag-shimmer {
+  animation: cinematicShimmer 0.55s cubic-bezier(0.77, 0, 0.18, 1) forwards;
+}
+.cinematic-tag-shimmer {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.12), transparent);
+  transform: translateX(-100%);
+}
+
+/* Glass pill — noise + shimmer on hover */
+.glass-pill-noise {
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
+}
+@keyframes glassShimmer {
+  from { transform: translateX(-100%); }
+  to { transform: translateX(100%); }
+}
+.glass-pill-wrap:hover .glass-pill-shimmer {
+  animation: glassShimmer 0.5s cubic-bezier(0.77, 0, 0.18, 1) forwards;
+}
+.glass-pill-shimmer {
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.06), transparent);
+  transform: translateX(-100%);
+}
