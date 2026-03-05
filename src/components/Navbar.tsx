@@ -31,7 +31,6 @@ export default function Navbar() {
           href="/"
           className="font-['Bebas_Neue'] text-2xl tracking-[0.2em] text-[var(--text-primary)]"
         >
-          RAF<span className="text-[var(--accent)]">.</span>
         </Link>
 
         <motion.button

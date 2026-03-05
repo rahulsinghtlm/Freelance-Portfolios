@@ -9,15 +9,20 @@ interface SplitTextProps {
 }
 
 export default function SplitText({ text, className = "", delay = 0 }: SplitTextProps) {
-  // Split into words, then each word into chars
-  // We keep words together so line breaks happen naturally
-  const words = text.split(" ");
+  let charIndex = 0;
+  const wordsWithChars = text.split(" ").map((word) => {
+    const chars = word.split("").map((char) => {
+      return { char, index: charIndex++ };
+    });
+    charIndex++; // add one for space
+    return { word, chars };
+  });
 
   return (
     <span className={`inline-flex flex-wrap ${className}`}>
-      {words.map((word, wi) => (
+      {wordsWithChars.map((wordObj, wi) => (
         <span key={wi} className="inline-flex mr-[0.25em]">
-          {word.split("").map((char, ci) => (
+          {wordObj.chars.map((c, ci) => (
             // Each char is wrapped in overflow:hidden so it "slides up from floor"
             <span key={ci} className="overflow-hidden inline-block">
               <motion.span
@@ -27,12 +32,12 @@ export default function SplitText({ text, className = "", delay = 0 }: SplitText
                 viewport={{ once: true }}
                 transition={{
                   duration: 0.7,
-                  // Each character starts slightly after the previous
-                  delay: delay + (wi * word.length + ci) * 0.025,
+                  // Each character starts slightly after the previous across the whole string
+                  delay: delay + c.index * 0.025,
                   ease: [0.77, 0, 0.18, 1],
                 }}
               >
-                {char}
+                {c.char}
               </motion.span>
             </span>
           ))}

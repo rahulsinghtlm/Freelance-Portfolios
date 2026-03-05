@@ -135,14 +135,14 @@ export default function About() {
 
             <div className="relative overflow-hidden rounded-[2rem] border border-white/10 bg-black/40 shadow-[0_0_80px_rgba(15,23,42,0.9)]">
               <div className="relative aspect-[4/5] w-full">
-              <Image
-  src="/images/about-portrait-2.png"
-  alt="Abhishek Bhattacharya – Quantom"
-  fill
-  sizes="(max-width:768px) 100vw, 420px"
-  className="object-cover"
-  priority
-/>
+                <img
+                  src="/images/about-portrait-2.png"
+                  alt="Abhishek Bhattacharya – Quantom"
+                  className="w-full h-full object-cover"
+                  onError={(e) => {
+                    e.currentTarget.style.display = 'none';
+                  }}
+                />
                 <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-black/70 via-black/15 to-transparent" />
               </div>
 

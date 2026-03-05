@@ -33,11 +33,11 @@ export default function RevealStack({
       className={`overflow-hidden ${className}`}
       initial={{
         opacity: 0,
-        ...(isVertical ? { y: d.y } : { x: d.x }),
+        ...(isVertical ? { y: (d as any).y } : { x: (d as any).x }),
       }}
       whileInView={{
         opacity: 1,
-        ...(isVertical ? { y: d.animateY } : { x: d.animateX }),
+        ...(isVertical ? { y: (d as any).animateY } : { x: (d as any).animateX }),
       }}
       viewport={{ once: true, margin: "-60px" }}
       transition={{ duration: 0.7, delay, ease: easeFilm }}

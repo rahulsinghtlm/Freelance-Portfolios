@@ -1,217 +1,117 @@
 "use client";
 
-import { motion, useScroll, useTransform, useSpring } from "framer-motion";
-import Image from "next/image";
-import { useRef } from "react";
-import SplitText from "./ui/SplitText";
+import { motion } from "framer-motion";
+
+function StatRing({ number, label, delay }: { number: string; label: string; delay: number }) {
+  return (
+    <motion.div
+      initial={{ scale: 0.5, opacity: 0 }}
+      animate={{ scale: 1, opacity: 1 }}
+      transition={{ duration: 0.8, delay, ease: [0.16, 1, 0.3, 1] }}
+      className="relative flex flex-col items-center justify-center w-[85px] h-[85px] md:w-32 md:h-32 rounded-full border-[2px] border-t-zinc-400 border-l-zinc-400 border-b-red-600 border-r-red-600 bg-gradient-to-br from-black/80 to-red-950/60"
+      style={{ boxShadow: "0 0 20px rgba(255, 0, 0, 0.4), inset 0 0 15px rgba(255, 0, 0, 0.3)" }}
+    >
+      <div className="absolute inset-[3px] rounded-full border border-red-500/20" />
+      <span
+        className="font-['Bebas_Neue'] text-3xl md:text-5xl text-transparent bg-clip-text z-10 tracking-wider"
+        style={{
+          backgroundImage: "linear-gradient(to bottom, #ffffff, #a1a1aa)",
+          filter: "drop-shadow(0 0 8px rgba(255,255,255,0.4))"
+        }}
+      >
+        {number}
+      </span>
+      <span className="font-['Bebas_Neue'] text-[10px] md:text-sm text-zinc-100 tracking-[0.2em] z-10 mt-0">
+        {label}
+      </span>
+    </motion.div>
+  );
+}
 
 export default function Hero() {
-  const ref = useRef<HTMLElement>(null);
-
-  // useScroll with a target = only tracks scroll within this section
-  const { scrollYProgress } = useScroll({
-    target: ref,
-    offset: ["start start", "end start"], // start when top of section hits top of screen
-  });
-
-  const ringYRaw = useTransform(scrollYProgress, [0, 1], [0, -40]);
-  const ringY = useSpring(ringYRaw, { stiffness: 120, damping: 22 });
-
-  // As user scrolls through hero:
-  // - background image moves up slightly (parallax)
-  // - text fades out and moves up
-  // - overlay gets darker
-  const bgY        = useTransform(scrollYProgress, [0, 1], ["0%",   "30%"]);   // parallax
-  const textY      = useTransform(scrollYProgress, [0, 1], ["0%",   "-20%"]);  // text floats up
-  const textOpacity= useTransform(scrollYProgress, [0, 0.5], [1, 0]);          // text fades
-  const overlayOp  = useTransform(scrollYProgress, [0, 1], [0.15, 0.6]);       // darkens
-
   return (
-    <section
-      ref={ref}
-      id="hero"
-      className="relative min-h-screen flex items-center overflow-hidden bg-[#050507]"
-    >
-      {/* ── Background texture / placeholder image ── */}
-      {/* Replace this div with an actual <Image> when you have one */}
-      <motion.div
-        className="absolute inset-0 bg-gradient-to-br from-[#39FF14]/10 via-[#00E5FF]/20 to-[#020308]"
-        style={{ y: bgY }}   // THIS is the parallax — moves at different speed
-      >
-        <div className="absolute right-[-10%] top-1/2 -translate-y-1/2 w-[36rem] h-[36rem] rounded-full bg-[radial-gradient(circle_at_center,#39FF14_0,#00E5FF_35%,transparent_70%)] opacity-60 blur-3xl" />
+    <section className="relative min-h-[100svh] w-full overflow-hidden bg-[#050000] flex flex-col">
+      {/* ── Background: Deep Red Cinematic Glow and Flares ── */}
+      <div className="absolute inset-0 pointer-events-none z-0 flex items-center justify-center overflow-hidden">
+        {/* Central huge red glow */}
+        <div className="absolute w-[200vw] md:w-[150vw] h-[150vh] bg-[radial-gradient(circle_at_center,rgba(220,10,10,0.5)_0%,rgba(80,0,0,0.6)_40%,rgba(0,0,0,1)_75%)] opacity-90" />
 
-        {/* Decorative grid lines — editorial feel */}
-        <svg className="absolute inset-0 w-full h-full opacity-[0.06]" xmlns="http://www.w3.org/2000/svg">
-          <defs>
-            <pattern id="grid" width="80" height="80" patternUnits="userSpaceOnUse">
-              <path d="M 80 0 L 0 0 0 80" fill="none" stroke="#1A1A1A" strokeWidth="0.5"/>
-            </pattern>
-          </defs>
-          <rect width="100%" height="100%" fill="url(#grid)" />
-        </svg>
-      </motion.div>
+        {/* Fake diagonal light rays / sparks simulation */}
+        <div className="absolute top-0 left-[-20%] w-[140%] h-[30%] bg-[radial-gradient(ellipse_at_top,rgba(255,255,255,0.1)_0%,transparent_70%)] opacity-30 blur-3xl transform -rotate-12" />
+        <div className="absolute bottom-[-10%] right-[-20%] w-[100%] h-[40%] bg-[radial-gradient(ellipse_at_bottom,rgba(255,0,0,0.2)_0%,transparent_70%)] opacity-40 blur-3xl transform rotate-12" />
+      </div>
 
-      {/* Overlay that darkens on scroll */}
-      <motion.div
-        className="absolute inset-0 bg-[#1A1A1A]"
-        style={{ opacity: overlayOp }}
-      />
+      {/* ── Main Content Container ── */}
+      <div className="relative z-10 w-full flex-1 flex flex-col pt-24 md:pt-32 pb-8 md:pb-12 px-6 md:px-12 max-w-[1600px] mx-auto">
 
-      {/* ── Main content — moves up and fades as you scroll ── */}
-      <motion.div
-        className="relative z-10 w-full max-w-7xl mx-auto px-10 pt-28"
-        style={{ y: textY, opacity: textOpacity }}
-      >
-
-        <div className="flex flex-col lg:flex-row items-start gap-16">
-          <div className="flex-1">
-            {/* Eyebrow */}
-            <motion.div
-              className="flex items-center gap-3 mb-8"
-              initial={{ opacity: 0, x: -20 }}
-              animate={{ opacity: 1, x: 0   }}
-              transition={{ duration: 0.8, delay: 0.3, ease: [0.77, 0, 0.18, 1] }}
-            >
-              <span className="w-8 h-px bg-[#ef4444]" />
-              <span className="font-['Syne'] text-[11px] font-semibold tracking-[0.25em] uppercase text-[#8A8A8A]">
-                Video Editor · Motion Designer
-              </span>
-            </motion.div>
-
-            {/* Giant headline — char by char animation */}
-            <h1 className="font-['Bebas_Neue'] text-[clamp(5rem,13vw,12rem)] leading-[0.88] tracking-tight text-[#f5f0e8] mb-8">
-              <SplitText text="TURNING" delay={0.5} />
-              <br />
-              <SplitText text="RAW INTO" className="text-[#00E5FF]" delay={0.65} />
-              <br />
-              <SplitText text="CINEMA" delay={0.8} />
-            </h1>
-
-            {/* Sub-text + CTA in a row */}
-            <div className="flex items-end justify-between flex-wrap gap-8">
-              <motion.p
-                className="font-['Instrument_Serif'] italic text-xl text-[#e5e7eb] max-w-sm leading-relaxed"
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0  }}
-                transition={{ duration: 0.9, delay: 1.2 }}
-              >
-                Video editing that makes people feel something — for YouTube, brands, and film.
-              </motion.p>
-
-              <motion.a
-                href="#work"
-                className="font-['Syne'] text-sm font-bold tracking-[0.1em] uppercase bg-[#ef4444] text-[#ffffff] px-10 py-4 hover:bg-[#b91c1c] hover:text-[#f5f0e8] transition-all duration-300"
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0  }}
-                transition={{ duration: 0.9, delay: 1.4 }}
-                whileHover={{ y: -3 }}
-              >
-                View Work ↓
-              </motion.a>
-            </div>
-
-            {/* Hero stats */}
-            <motion.div
-              className="mt-14 grid grid-cols-3 gap-10 max-w-xl"
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              transition={{ delay: 1.6 }}
-            >
-              <div>
-                <p className="font-['Bebas_Neue'] text-5xl md:text-6xl text-[#39FF14] leading-none">
-                  100M+
-                </p>
-                <p className="font-['Syne'] text-[10px] tracking-[0.2em] uppercase text-[#9CA3AF] mt-2">
-                  VIEWS
-                </p>
-              </div>
-              <div>
-                <p className="font-['Bebas_Neue'] text-5xl md:text-6xl text-[#00E5FF] leading-none">
-                  10000+
-                </p>
-                <p className="font-['Syne'] text-[10px] tracking-[0.2em] uppercase text-[#9CA3AF] mt-2">
-                  PROJECTS
-                </p>
-              </div>
-              <div>
-                <p className="font-['Bebas_Neue'] text-5xl md:text-6xl text-[#f5f0e8] leading-none">
-                  3+
-                </p>
-                <p className="font-['Syne'] text-[10px] tracking-[0.2em] uppercase text-[#9CA3AF] mt-2">
-                  YEARS
-                </p>
-              </div>
-            </motion.div>
-          </div>
-
-          {/* Portrait with circular rotating text */}
-          <motion.div
-            className="relative flex-1 flex justify-center lg:justify-end w-full"
-            style={{ y: ringY }}
+        {/* Top Metallic Text */}
+        <motion.div
+          initial={{ y: -30, opacity: 0, scale: 0.95 }}
+          animate={{ y: 0, opacity: 1, scale: 1 }}
+          transition={{ duration: 1, ease: "easeOut" }}
+          className="w-full text-center z-20"
+        >
+          <h1
+            className="font-['Bebas_Neue'] text-[clamp(2.5rem,8vw,6.5rem)] leading-[0.85] tracking-widest text-transparent bg-clip-text uppercase"
+            style={{
+              backgroundImage: "linear-gradient(to bottom, #ffffff 0%, #a1a1aa 45%, #ffffff 55%, #52525b 100%)",
+              filter: "drop-shadow(0px 8px 16px rgba(0,0,0,1)) drop-shadow(0px 0px 30px rgba(255,0,0,0.4))"
+            }}
           >
-            <div className="relative w-64 h-64 md:w-72 md:h-72">
-              <div className="absolute inset-4 rounded-full border border-[#39FF14]/40 bg-black/40 backdrop-blur-sm overflow-hidden shadow-[0_0_60px_rgba(57,255,20,0.4)]">
-              <Image
-  src="/images/editor-portrait-1.png"
-  alt="Quantom – video editor portrait"
-  fill
-  sizes="(max-width:768px) 60vw, 300px"
-  className="object-cover"
-  priority
-/>
-              </div>
-
-              <motion.div
-                className="absolute inset-0 rounded-full flex items-center justify-center pointer-events-none"
-                animate={{ rotate: 360 }}
-                transition={{ duration: 28, repeat: Infinity, ease: "linear" }}
-              >
-                <div className="relative w-full h-full">
-                  {"HI I'M QUANTOM THE EDITOR YOU NEED"
-                    .split("")
-                    .map((char, index, arr) => {
-                      const angle = (360 / arr.length) * index;
-                      return (
-                        <span
-                          key={index}
-                          className="absolute left-1/2 top-1/2 font-['Syne'] text-[10px] tracking-[0.3em] uppercase text-[#e5e7eb]"
-                          style={{
-                            transform: `rotate(${angle}deg) translateY(-135%)`,
-                            transformOrigin: "0 0",
-                          }}
-                        >
-                          {char}
-                        </span>
-                      );
-                    })}
-                </div>
-              </motion.div>
-            </div>
-          </motion.div>
-        </div>
-
-          {/* Scroll indicator — animated bouncing arrow */}
-          <div className="ml-auto flex flex-col items-center gap-2 self-end pb-1">
-            <motion.div
-              className="w-px h-10 bg-[#1f2933]"
-              animate={{ scaleY: [1, 0.3, 1] }}
-              style={{ transformOrigin: "top" }}
-              transition={{ duration: 1.5, repeat: Infinity, ease: "easeInOut" }}
-            />
-            <span className="font-['Syne'] text-[9px] tracking-[0.2em] uppercase text-[#8A8A8A]">
-              scroll
-            </span>
-          </div>
+            HI IM QUANTOM THE EDITOR<br />
+            YOU'LL ALWAYS NEED
+          </h1>
         </motion.div>
-      {/* ── Floating year badge — editorial detail ── */}
-      <motion.div
-        className="absolute top-32 right-10 font-['Bebas_Neue'] text-[8rem] leading-none text-[#f5f0e8]/5 select-none pointer-events-none"
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ delay: 1 }}
-      >
-        2026
-      </motion.div>
+
+        {/* Center Portrait - Rises from the bottom */}
+        <motion.div
+          initial={{ y: 60, opacity: 0 }}
+          animate={{ y: 0, opacity: 1 }}
+          transition={{ duration: 1.2, ease: "easeOut", delay: 0.2 }}
+          className="absolute bottom-0 left-1/2 -translate-x-1/2 w-[95%] sm:w-[80%] md:w-[60%] max-w-[750px] h-[75vh] pointer-events-none z-10"
+        >
+          <img
+            src="/images/editor-portrait-1.png"
+            alt="Quantom"
+            className="w-full h-full object-contain object-bottom"
+            style={{ filter: "drop-shadow(0px -10px 50px rgba(200,0,0,0.3))" }}
+            onError={(e) => { e.currentTarget.style.display = 'none'; }}
+          />
+        </motion.div>
+
+        {/* Bottom Elements: Left Text and Right Stats */}
+        <div className="mt-auto w-full flex flex-col lg:flex-row items-center lg:items-end justify-between gap-10 z-20 pb-4">
+
+          {/* Bottom Left: Italic Paragraph */}
+          <motion.div
+            initial={{ x: -40, opacity: 0 }}
+            animate={{ x: 0, opacity: 1 }}
+            transition={{ duration: 1, ease: "easeOut", delay: 0.4 }}
+            className="w-full lg:w-[40%] text-center lg:text-left drop-shadow-2xl"
+          >
+            <h2
+              className="font-['Bebas_Neue'] italic text-3xl md:text-5xl lg:text-5xl leading-[1] tracking-wide text-transparent bg-clip-text uppercase"
+              style={{
+                backgroundImage: "linear-gradient(to right, #ffffff, #e4e4e7)",
+                filter: "drop-shadow(3px 5px 5px rgba(0,0,0,1)) drop-shadow(0 0 15px rgba(255,0,0,0.6))",
+                WebkitTextStroke: "1px rgba(239, 68, 68, 0.4)"
+              }}
+            >
+              Video editing that makes<br />
+              people feel something — for<br />
+              YouTube, brands, and film.
+            </h2>
+          </motion.div>
+
+          {/* Bottom Right: Circular Stats */}
+          <div className="w-full lg:w-auto flex items-center justify-center lg:justify-end gap-3 md:gap-5 pb-2">
+            <StatRing number="100M+" label="VIEWS" delay={0.6} />
+            <StatRing number="10000+" label="PROJECTS" delay={0.7} />
+            <StatRing number="3+" label="YEARS" delay={0.8} />
+          </div>
+
+        </div>
+      </div>
     </section>
   );
 }
