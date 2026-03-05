@@ -1,6 +1,7 @@
 "use client";
 
 import { motion, useScroll, useTransform } from "framer-motion";
+import Image from "next/image";
 import { useRef } from "react";
 import SplitText from "./ui/SplitText";
 import CinematicTag from "./ui/CinematicTag";
@@ -42,23 +43,64 @@ export default function About() {
         </RevealStackItem>
 
         <RevealStackItem delay={0.06}>
-          <h2 className="font-['Bebas_Neue'] text-[clamp(3rem,5vw,5rem)] leading-none text-[var(--text-primary)] mb-8">
-            <SplitText text="RAFAEL" delay={0.1} />
+          <h2 className="font-['Bebas_Neue'] text-[clamp(3rem,5vw,5rem)] leading-none text-[var(--text-primary)] mb-4">
+            <SplitText text="ABHISHEK" delay={0.1} />
             <br />
-            <SplitText text="A. COSTA" className="text-[var(--accent)]" delay={0.2} />
+            <SplitText text="BHATTACHARYA" className="text-[var(--accent)]" delay={0.2} />
           </h2>
         </RevealStackItem>
 
         <RevealStackItem delay={0.12}>
-          <p className="font-['Instrument_Serif'] italic text-xl text-[var(--text-muted)] leading-relaxed mb-4 max-w-sm">
-            Based in São Paulo, Brazil. Making videos that stop the scroll since 2021.
+          <p className="font-['Syne'] text-sm md:text-base text-[var(--text-muted)] leading-relaxed mb-1 max-w-md">
+            Also known as <span className="text-[var(--text-primary)] font-semibold">Quantom</span>. Currently based in India.
           </p>
         </RevealStackItem>
 
         <RevealStackItem delay={0.18}>
-          <p className="font-['Syne'] text-sm text-[var(--text-muted)] leading-relaxed max-w-sm">
-            Every frame is intentional. I work with YouTubers, brands, and filmmakers
-            who want their content to feel cinematic — not just edited.
+          <p className="font-['Syne'] text-sm md:text-base text-[var(--text-muted)] leading-relaxed mb-6 max-w-lg">
+            Professional video editor working with multiple YouTube channels focused on football
+            content and sports storytelling.
+          </p>
+        </RevealStackItem>
+
+        <RevealStackItem delay={0.24}>
+          <div className="font-['Syne'] text-sm md:text-base text-[var(--text-muted)] leading-relaxed mb-8 max-w-lg space-y-2">
+            <p className="text-[var(--text-primary)]/80 font-semibold tracking-[0.18em] uppercase text-[11px] mb-3">
+              Video Editing Agency
+            </p>
+            <ul className="space-y-1.5">
+              <li className="flex gap-2">
+                <span className="mt-[7px] h-[3px] w-3 rounded-full bg-[var(--accent)]" />
+                <span>YouTube editing</span>
+              </li>
+              <li className="flex gap-2">
+                <span className="mt-[7px] h-[3px] w-3 rounded-full bg-[var(--accent)]" />
+                <span>Football content editing</span>
+              </li>
+              <li className="flex gap-2">
+                <span className="mt-[7px] h-[3px] w-3 rounded-full bg-[var(--accent)]" />
+                <span>Motion graphics</span>
+              </li>
+              <li className="flex gap-2">
+                <span className="mt-[7px] h-[3px] w-3 rounded-full bg-[var(--accent)]" />
+                <span>Shorts & reels editing</span>
+              </li>
+              <li className="flex gap-2">
+                <span className="mt-[7px] h-[3px] w-3 rounded-full bg-[var(--accent)]" />
+                <span>Social media edits</span>
+              </li>
+              <li className="flex gap-2">
+                <span className="mt-[7px] h-[3px] w-3 rounded-full bg-[var(--accent)]" />
+                <span>Full production editing support</span>
+              </li>
+            </ul>
+          </div>
+        </RevealStackItem>
+
+        <RevealStackItem delay={0.3}>
+          <p className="font-['Syne'] text-sm md:text-base text-[var(--text-muted)] leading-relaxed max-w-lg">
+            Open to working with creators, brands and sports channels worldwide who want
+            their football content to feel cinematic and unforgettable.
           </p>
         </RevealStackItem>
 
@@ -83,20 +125,49 @@ export default function About() {
       </motion.div>
 
       <motion.div className="relative overflow-hidden" style={{ clipPath }}>
-        <div className="absolute inset-0 bg-gradient-to-br from-[#1A0B0B] via-[#0b0b0f] to-[#090312]">
-          <span className="absolute inset-0 flex items-center justify-center font-['Bebas_Neue'] text-[20rem] text-[var(--text-primary)]/5 select-none">
-            RC
-          </span>
+        <div className="absolute inset-0 bg-gradient-to-br from-[#020617] via-[#02010A] to-[#050816]">
+          <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_top,#ffffff0f,transparent_60%)]" />
         </div>
-        <motion.div
-          className="absolute bottom-12 right-12 bg-[var(--accent)] text-black font-['Bebas_Neue'] text-xl tracking-wider px-6 py-4 leading-tight shadow-[var(--glow-soft)]"
-          initial={{ scale: 0, rotate: 12 }}
-          whileInView={{ scale: 1, rotate: 0 }}
-          viewport={{ once: true }}
-          transition={{ type: "spring", stiffness: 180, damping: 14, delay: 0.5 }}
-        >
-          Available<br />for Hire
-        </motion.div>
+
+        <div className="relative z-10 flex h-full w-full items-center justify-center px-6 py-16 md:px-10">
+          <div className="relative w-full max-w-md">
+            <div className="absolute -inset-6 rounded-[2.5rem] bg-[conic-gradient(from_220deg_at_50%_0%,rgba(148,163,184,0.05),rgba(56,189,248,0.18),rgba(59,130,246,0.08),rgba(15,23,42,0.2))] opacity-80 blur-2xl" />
+
+            <div className="relative overflow-hidden rounded-[2rem] border border-white/10 bg-black/40 shadow-[0_0_80px_rgba(15,23,42,0.9)]">
+              <div className="relative aspect-[4/5] w-full">
+              <Image
+  src="/images/about-portrait-2.png"
+  alt="Abhishek Bhattacharya – Quantom"
+  fill
+  sizes="(max-width:768px) 100vw, 420px"
+  className="object-cover"
+  priority
+/>
+                <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-black/70 via-black/15 to-transparent" />
+              </div>
+
+              <div className="absolute bottom-6 left-6 right-6 flex items-end justify-between gap-4">
+                <div>
+                  <p className="font-['Syne'] text-[11px] tracking-[0.25em] uppercase text-white/60 mb-1">
+                    Abhishek · Quantom
+                  </p>
+                  <p className="font-['Bebas_Neue'] text-2xl md:text-3xl text-white leading-none">
+                    Football Editing & Story
+                  </p>
+                </div>
+                <motion.div
+                  className="rounded-full border border-white/30 bg-white/10 px-4 py-2 font-['Syne'] text-[10px] uppercase tracking-[0.2em] text-white/80 backdrop-blur-md"
+                  initial={{ opacity: 0, y: 10 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ delay: 0.4, duration: 0.5, ease: easeFilm }}
+                >
+                  India · Remote
+                </motion.div>
+              </div>
+            </div>
+          </div>
+        </div>
       </motion.div>
     </section>
   );

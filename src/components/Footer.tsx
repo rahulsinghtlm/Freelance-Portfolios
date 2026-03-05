@@ -17,7 +17,7 @@ const SOCIALS = [
   },
   {
     name: "X (Twitter)",
-    href: "https://x.com",
+    href: "https://x.com/rahulsingh",
     icon: (
       <svg viewBox="0 0 24 24" fill="currentColor" className="w-5 h-5">
         <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z" />
@@ -60,7 +60,7 @@ export default function Footer() {
           href="/"
           className="font-['Bebas_Neue'] text-2xl tracking-[0.2em] text-[var(--text-primary)]"
         >
-          RAF<span className="text-[var(--accent)]">.</span>
+          QUANTOM<span className="text-[var(--accent)]">.</span>
         </Link>
 
         <div className="flex items-center gap-8">
@@ -71,7 +71,7 @@ export default function Footer() {
               target="_blank"
               rel="noopener noreferrer"
               aria-label={social.name}
-              className="text-[var(--text-muted)] hover:text-[var(--text-primary)]"
+              className="relative text-[var(--text-muted)] hover:text-[var(--text-primary)] group"
               whileHover={{
                 scale: 1.15,
                 rotate: 3,
@@ -87,13 +87,27 @@ export default function Footer() {
               >
                 {social.icon}
               </span>
+
+              {social.name === "X (Twitter)" && (
+                <div className="pointer-events-none absolute -top-28 right-0 w-64 rounded-2xl border border-white/10 bg-black/90 px-4 py-3 text-left opacity-0 shadow-[0_18px_40px_rgba(0,0,0,0.65)] backdrop-blur-md transition-all duration-300 translate-y-1 group-hover:opacity-100 group-hover:translate-y-0">
+                  <p className="font-['Syne'] text-[10px] leading-relaxed text-[var(--text-muted)]">
+                    Site created and deployed by
+                    <br />
+                    <span className="text-[var(--text-primary)] font-semibold tracking-wide">
+                      RAHUL SINGH
+                    </span>
+                    <br />
+                    All rights reserved 😘
+                  </p>
+                </div>
+              )}
             </motion.a>
           ))}
         </div>
       </div>
 
       <p className="max-w-7xl mx-auto mt-12 pt-8 border-t border-[var(--border-subtle)] font-['Syne'] text-xs text-[var(--text-muted)] text-center md:text-left">
-        © 2025 Rafael A. Costa — São Paulo
+        © 2026 Abhishek Bhattacharya — India
       </p>
     </footer>
   );
